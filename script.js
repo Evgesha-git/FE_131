@@ -1,135 +1,82 @@
-// let num = prompt();
+// let summ = 0,
+//     count = 0;
 
-// if ((+num[0] + +num[1] + +num[2]) === (+num[3] + +num[4] + +num[5])) {
-//     console.log('да');
-// } else {
-//     console.log('нет');
+// while (true) {
+//     let num = prompt('Введите число');
+//     if (isNaN(num) || num === '') {
+//         alert('Введено не чило');
+//         continue;
+//     }
+//     if (+num === 0) { // if (!+num)
+//         break;
+//     }
+//     summ += +num; // summ += Number(num) | summ = summ + Number(num)
+//     count++; // count = count + 1 | count-- -> count = count - 1
 // }
 
-// switch ((+num[0] + +num[1] + +num[2]) === (+num[3] + +num[4] + +num[5])) {
-//     case true:
-//         console.log('да');
-//         break
-//     case false:
-//         console.log('нет');
+// alert('Общая сумма: ' + summ + '\nСреднее арифметическое: ' + summ / count);
+
+// let str = '4 98 4 6 1 32 4 65 4 3 5 7 89 7 10 1 36 8 57';
+// let min = Infinity,
+//     max = -Infinity;
+// let buf = '';
+
+// for (let i = 0; i < str.length; i++) {
+
+//     if (str[i] !== ' ') {
+//         buf += str[i];
+//     } else {
+//         if (+buf > max) max = +buf;
+//         if (+buf < min) min = +buf;
+//         buf = '';
+//     }
 // }
 
-// let a = prompt();
+// console.log('Макимальное число: ' + max + '\nМинимальное число: ' + min);
 
-// let b = a || 1;
-// let c = a ?? 2;
+// let num = prompt('Введите число');
+// let count = 0,
+//     summ = 0,
+//     rev = '';
 
-// console.log(b);
-// console.log(c);
-
-// let time = +prompt();
-
-// let years = parseInt(time / (365 * 24 * 3600));
-// time = time % (365 * 24 * 3600);
-// let monts = parseInt(time / (31 * 24 * 3600));
-// time = time % (31 * 24 * 3600);
-// let weeks = parseInt(time / (7 * 24 * 3600));
-// time %= (7 * 24 * 3600);
-// let days = parseInt(time / (24 * 3600));
-// time %= (24 * 3600);
-// let hours = parseInt(time / 3600);
-// time = time % 3600;
-// let minuts = parseInt(time / 60);
-// time %= 60;
-
-
-// if (years > 1) {
-//     console.log(years + ' лет');
-// } else {
-//     console.log('Меньше года');
+// for (let i = 0; i < num.length; i++) {
+//     // console.log(num[i]);
+//     count++;
+//     summ += +num[i];
+//     rev = num[i] + rev;
 // }
 
-// if (monts > 1) {
-//     console.log(monts + ' Месяцев');
-// } else {
-//     console.log('Меньше месяца');
+// console.log(`Исходное число: ${num}
+// Сумма цифр: ${summ}
+// Количество цифр: ${count}
+// Число в обратном порядке: ${rev}`);
+
+// var i = 45;
+
+// for (var i = 0; i < 10; i++) {
+//     console.log(i);
 // }
 
-// if (weeks > 1) {
-//     console.log(weeks + ' недель');
-// } else {
-//     console.log('Меньше недели');
-// }
+// console.log(i);
 
-// if (days > 1) {
-//     console.log(days + ' дней');
-// } else {
-//     console.log('Меньше дня');
-// }
+let arr = [1, 2, 3, 4];
+let arr2 = new Array(5).fill('b');
 
-// if (hours > 1) {
-//     console.log(hours + ' часов');
-// } else {
-//     console.log('Меньше часа');
-// }
+console.log(arr.length);
+// console.log(arr2);
+arr[1000] = 'lol';
+console.log(arr.length);
 
-// if (minuts > 1) {
-//     console.log(minuts + ' минут');
-// } else {
-//     console.log('Меньше минуты');
-// }
-// console.log(time + ' секунд');
+let count = 0;
 
-let days = +prompt();
-if (days < 0 || days > 365) {
-    console.log('Неверно введенный день');
-} else {
-    let mont = 0;
-    let season = '';
-
-    if (days <= 31) {
-        mont = 1;
-    } else if (days <= 59) {
-        mont = 2;
-    } else if (days <= 90) {
-        mont = 3;
-    } else if (days <= 120) {
-        mont = 4;
-    } else if (days <= 151) {
-        mont = 5;
-    } else if (days <= 181) {
-        mont = 6;
-    } else if (days <= 212) {
-        mont = 7;
-    } else if (days <= 243) {
-        mont = 8;
-    } else if (days <= 273) {
-        mont = 9;
-    } else if (days <= 304) {
-        mont = 10;
-    } else if (days <= 334) {
-        mont = 11;
-    } else {
-        mont = 12;
+for (let i = 0; i < arr.length; i++) {
+    if (arr[i]) {
+        count++;
     }
-
-    switch (mont) {
-        case 12:
-        case 1:
-        case 2:
-            season = 'зима';
-            break;
-        case 3:
-        case 4:
-        case 5:
-            season = 'весна';
-            break;
-        case 6:
-        case 7:
-        case 8:
-            season = 'лето';
-            break;
-        case 9:
-        case 10:
-        case 11:
-            season = 'осень';
-    }
-
-    console.log(mont + ' - месяц');
-    console.log(season + ' - пора года');
 }
+
+console.log(count);
+
+let str = '4 98 4 6 1 32 4 65 4 3 5 7 89 7 10 1 36 8 57';
+str = str.split(' ');
+console.log(str.join(' * '));
