@@ -1,82 +1,118 @@
-// let summ = 0,
-//     count = 0;
+// let arr = [1, 2, 34, 'gtfed', [1, 3, '456'], b];
+
+// let arr = [];
 
 // while (true) {
 //     let num = prompt('Введите число');
-//     if (isNaN(num) || num === '') {
-//         alert('Введено не чило');
+//     if (isNaN(num)) {
+//         alert('Ввели не чило');
 //         continue;
 //     }
-//     if (+num === 0) { // if (!+num)
+//     if (num === '') {
 //         break;
 //     }
-//     summ += +num; // summ += Number(num) | summ = summ + Number(num)
-//     count++; // count = count + 1 | count-- -> count = count - 1
+//     arr.push(+num);
 // }
 
-// alert('Общая сумма: ' + summ + '\nСреднее арифметическое: ' + summ / count);
+// arr.sort(function (a, b) {
+//     return a - b;
+// });
 
-// let str = '4 98 4 6 1 32 4 65 4 3 5 7 89 7 10 1 36 8 57';
-// let min = Infinity,
-//     max = -Infinity;
-// let buf = '';
+// console.log(arr);
 
-// for (let i = 0; i < str.length; i++) {
+// let arr = [48, 9, 0, 4, 21, 2, 1, 0, 8, 84, 76, 8, 4, 0, 13, 2];
+// let firsIndex = arr.indexOf(0),
+//     lastIndex = arr.lastIndexOf(0),
+//     summ = 0;
 
-//     if (str[i] !== ' ') {
-//         buf += str[i];
-//     } else {
-//         if (+buf > max) max = +buf;
-//         if (+buf < min) min = +buf;
-//         buf = '';
+// if (firsIndex === lastIndex) {
+//     console.log(summ);
+// } else {
+//     for (let i = firsIndex; i < lastIndex; i++) {
+//         summ += arr[i];
 //     }
+//     console.log(summ);
 // }
 
-// console.log('Макимальное число: ' + max + '\nМинимальное число: ' + min);
+// let h = +prompt('Высота пирамидки');
 
-// let num = prompt('Введите число');
-// let count = 0,
-//     summ = 0,
-//     rev = '';
+// for (let i = 1; i <= h; i++) {
+//     let str = '';
+//     let p = '';
+//     for (let j = 0; j < h - i; j++) {
+//         str += ' ';
+//     }
+//     for (let a = 0; a < i * 2 - 1; a++) {
+//         p += '^';
+//     }
 
-// for (let i = 0; i < num.length; i++) {
-//     // console.log(num[i]);
-//     count++;
-//     summ += +num[i];
-//     rev = num[i] + rev;
+//     document.write(`<pre>${str + p}</pre>`);
 // }
 
-// console.log(`Исходное число: ${num}
-// Сумма цифр: ${summ}
-// Количество цифр: ${count}
-// Число в обратном порядке: ${rev}`);
 
-// var i = 45;
+// let str = 'hello world';
 
-// for (var i = 0; i < 10; i++) {
-//     console.log(i);
+// str = str.split(' ');
+// for (let i = 0; i < str.length; i++) {
+//     str[i] = str[i][0].toUpperCase() + str[i].slice(1);
 // }
 
-// console.log(i);
+// str = str.join(' ');
+// console.log(str);
 
-let arr = [1, 2, 3, 4];
-let arr2 = new Array(5).fill('b');
+// let arr1 = [1, 2, 3];
+// let arr2 = arr1;
+// let arr3 = [...arr1];
 
-console.log(arr.length);
-// console.log(arr2);
-arr[1000] = 'lol';
-console.log(arr.length);
+// let arr3_2 = [];
+// for (let i = 0; i < arr1.length; i++) {
+//     arr3_2.push(arr1[i]);
+// }
 
-let count = 0;
+// let elems = document.querySelectorAll('p');
 
-for (let i = 0; i < arr.length; i++) {
-    if (arr[i]) {
-        count++;
+// console.log(elems);
+
+// [...elems].map(function (elem) {
+//     setInterval(function () {
+//         elem.style.fontSize = Math.floor(Math.random() * (50 - 10) + 10) + 'px';
+//     }, 100);
+// });
+
+// let user = ['Иванов', 'Иван', 'Иванович'];
+
+// let [name, ...lastName] = user;
+// console.log(name);
+// // console.log(surName);
+// console.log(lastName);
+
+// let a = 3;
+// let b = 6;
+
+// [a, b] = [b, a];
+
+let nums = [2, 34, 234, 34, 3, 1, 45, 65, 32];
+let numsNew = [];
+
+for (let i = 0; i < nums.length; i++) {
+    if (nums[i] % 2 === 0) {
+        numsNew.push(nums[i]);
     }
 }
 
-console.log(count);
+console.log(numsNew);
 
-let str = '4 98 4 6 1 32 4 65 4 3 5 7 89 7 10 1 36 8 57';
-str = str.split(' ');
-console.log(str.join(' * '));
+nums = nums.filter(num => num % 2 === 0);
+// nums = nums.filter(function(num){
+//     return num % 2 === 0
+// });
+
+console.log(nums);
+
+for (let key in nums) {
+    console.log(key);
+}
+
+for (const num of nums) {
+    console.log(num);
+}
