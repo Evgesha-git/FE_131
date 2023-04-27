@@ -1,118 +1,111 @@
-// let arr = [1, 2, 34, 'gtfed', [1, 3, '456'], b];
+// function f12(name, surName, lastName, group) {
+//     let title = 'Домашняя работа: «Функции»';
+//     let subTitle = 'Выполнил: студент гр. ' + group;
+//     let stringName = `${name} ${surName} ${lastName}`;
 
-// let arr = [];
+//     let maxStr = 0;
+//     if (title.length > maxStr) maxStr = title.length;
+//     if (subTitle.length > maxStr) maxStr = subTitle.length;
+//     if (stringName.length > maxStr) maxStr = stringName.length;
 
-// while (true) {
-//     let num = prompt('Введите число');
-//     if (isNaN(num)) {
-//         alert('Ввели не чило');
-//         continue;
+//     let ramka = '';
+//     for (let i = 0; i < maxStr + 4; i++) {
+//         ramka += '*';
 //     }
-//     if (num === '') {
-//         break;
-//     }
-//     arr.push(+num);
-// }
+//     // *******************************
+//     // * Домашняя работа: «Функции»  *
+//     // * Выполнил: студент гр. W4017 *
+//     // * Иванов Иван Иванович        *
+//     // *******************************
 
-// arr.sort(function (a, b) {
-//     return a - b;
-// });
-
-// console.log(arr);
-
-// let arr = [48, 9, 0, 4, 21, 2, 1, 0, 8, 84, 76, 8, 4, 0, 13, 2];
-// let firsIndex = arr.indexOf(0),
-//     lastIndex = arr.lastIndexOf(0),
-//     summ = 0;
-
-// if (firsIndex === lastIndex) {
-//     console.log(summ);
-// } else {
-//     for (let i = firsIndex; i < lastIndex; i++) {
-//         summ += arr[i];
-//     }
-//     console.log(summ);
-// }
-
-// let h = +prompt('Высота пирамидки');
-
-// for (let i = 1; i <= h; i++) {
-//     let str = '';
-//     let p = '';
-//     for (let j = 0; j < h - i; j++) {
-//         str += ' ';
-//     }
-//     for (let a = 0; a < i * 2 - 1; a++) {
-//         p += '^';
+//     const fStr = function (str, len) {
+//         for (let i = str.length; i < len; i++) {
+//             str += ' ';
+//         }
+//         return ('* ' + str + ' *');
 //     }
 
-//     document.write(`<pre>${str + p}</pre>`);
+//     title = fStr(title, maxStr);
+//     subTitle = fStr(subTitle, maxStr);
+//     stringName = fStr(stringName, maxStr);
+
+//     console.log(ramka);
+//     console.log(title);
+//     console.log(subTitle);
+//     console.log(stringName);
+//     console.log(ramka);
 // }
 
+// f12(prompt('Имя'), prompt('Фамилия'), prompt('Отчетсво'), prompt('Группа'));
 
-// let str = 'hello world';
+function f10(num) {
+    let summ = 0;
+    if (num < 10) return num;
+    num = num + '';
+    for (let i = 0; i < num.length; i++) {
+        summ += +num[i];
+    }
+    if (summ < 10) {
+        return summ
+    }
+    return f10(summ);
+}
 
-// str = str.split(' ');
-// for (let i = 0; i < str.length; i++) {
-//     str[i] = str[i][0].toUpperCase() + str[i].slice(1);
-// }
+// f10(5676) -> f10(24) -> 6
 
-// str = str.join(' ');
-// console.log(str);
+function f11(arr) {
+    if (arr.length === 0) return;
+    console.log(arr.pop());
+    f11(arr);
+}
 
-// let arr1 = [1, 2, 3];
-// let arr2 = arr1;
-// let arr3 = [...arr1];
+function makeCounter() {
+    let count = 0;
 
-// let arr3_2 = [];
-// for (let i = 0; i < arr1.length; i++) {
-//     arr3_2.push(arr1[i]);
-// }
-
-// let elems = document.querySelectorAll('p');
-
-// console.log(elems);
-
-// [...elems].map(function (elem) {
-//     setInterval(function () {
-//         elem.style.fontSize = Math.floor(Math.random() * (50 - 10) + 10) + 'px';
-//     }, 100);
-// });
-
-// let user = ['Иванов', 'Иван', 'Иванович'];
-
-// let [name, ...lastName] = user;
-// console.log(name);
-// // console.log(surName);
-// console.log(lastName);
-
-// let a = 3;
-// let b = 6;
-
-// [a, b] = [b, a];
-
-let nums = [2, 34, 234, 34, 3, 1, 45, 65, 32];
-let numsNew = [];
-
-for (let i = 0; i < nums.length; i++) {
-    if (nums[i] % 2 === 0) {
-        numsNew.push(nums[i]);
+    return function () {
+        return count++;
     }
 }
 
-console.log(numsNew);
+let counter1 = makeCounter();
+let counter2 = makeCounter();
 
-nums = nums.filter(num => num % 2 === 0);
-// nums = nums.filter(function(num){
-//     return num % 2 === 0
-// });
+/**
+ * function declaration
+ */
+// name()
+// function name(arg) {
+//     alert('hi')
+// }
 
-console.log(nums);
+// /**
+//  * function expression
+//  */
+// // f2() -> error
+// const f2 = function () {
+//     alert('hi 2');
+// }
+// f2();
+// // f2() -> normal
 
-for (let key in nums) {
-    console.log(key);
+// (function () {
+//     alert('hi 3')
+// })();
+
+const f3 = () => {
+    alert('hi 4')
 }
 
-for (const num of nums) {
-    console.log(num);
-}
+const f4 = x => x * x;
+/**
+ * const f4 = x => {
+ *   return x * x
+ * }
+ */
+
+const f5 = (a, b) => a + b;
+/**
+ * function f5(a, b){
+ *  return a + b;
+ * }
+ */
