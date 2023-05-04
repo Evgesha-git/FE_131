@@ -1,111 +1,64 @@
-// function f12(name, surName, lastName, group) {
-//     let title = 'Домашняя работа: «Функции»';
-//     let subTitle = 'Выполнил: студент гр. ' + group;
-//     let stringName = `${name} ${surName} ${lastName}`;
-
-//     let maxStr = 0;
-//     if (title.length > maxStr) maxStr = title.length;
-//     if (subTitle.length > maxStr) maxStr = subTitle.length;
-//     if (stringName.length > maxStr) maxStr = stringName.length;
-
-//     let ramka = '';
-//     for (let i = 0; i < maxStr + 4; i++) {
-//         ramka += '*';
-//     }
-//     // *******************************
-//     // * Домашняя работа: «Функции»  *
-//     // * Выполнил: студент гр. W4017 *
-//     // * Иванов Иван Иванович        *
-//     // *******************************
-
-//     const fStr = function (str, len) {
-//         for (let i = str.length; i < len; i++) {
-//             str += ' ';
-//         }
-//         return ('* ' + str + ' *');
-//     }
-
-//     title = fStr(title, maxStr);
-//     subTitle = fStr(subTitle, maxStr);
-//     stringName = fStr(stringName, maxStr);
-
-//     console.log(ramka);
-//     console.log(title);
-//     console.log(subTitle);
-//     console.log(stringName);
-//     console.log(ramka);
-// }
-
-// f12(prompt('Имя'), prompt('Фамилия'), prompt('Отчетсво'), prompt('Группа'));
-
-function f10(num) {
-    let summ = 0;
-    if (num < 10) return num;
-    num = num + '';
-    for (let i = 0; i < num.length; i++) {
-        summ += +num[i];
-    }
-    if (summ < 10) {
-        return summ
-    }
-    return f10(summ);
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
-// f10(5676) -> f10(24) -> 6
+let s = ' \t \n   djfgjkdgh gjh sdf  \n  ';
+console.log(s);
+console.log(s.trim());
+console.log(s.trimEnd());
+console.log(s.trimStart());
+console.log(s.replace(/^\s+/g, '').replace(/\s+$/g, ''));
 
-function f11(arr) {
-    if (arr.length === 0) return;
-    console.log(arr.pop());
-    f11(arr);
+
+let arr = [4, 2, 5, 19, 13, 0, 10];
+
+// let num = Math.sqrt(arr.reduce(function (acc, elem) {
+//     return acc += elem ** 3;
+// }, 0));
+
+let num = Math.sqrt(arr.reduce((acc, elem) => acc += elem ** 3, 0));
+
+console.log(num);
+
+const email = function (mail) {
+    let regExp = /^[^\d]{1}[a-zA-Z_\.\d]{1,}@{1}[a-zA-Z\d_]{2,11}\.[a-z]{2,11}/g;
+    return regExp.test(mail);
 }
-
-function makeCounter() {
-    let count = 0;
-
-    return function () {
-        return count++;
-    }
-}
-
-let counter1 = makeCounter();
-let counter2 = makeCounter();
 
 /**
- * function declaration
+ * емаил@почта.бел
+ * test@mail.com
+ * test._2@test.com
+ * test._\$@test.com
+ * ts@test.com
+ * t@test.com
+ * 2test@mail.com
  */
-// name()
-// function name(arg) {
-//     alert('hi')
-// }
 
-// /**
-//  * function expression
-//  */
-// // f2() -> error
-// const f2 = function () {
-//     alert('hi 2');
-// }
-// f2();
-// // f2() -> normal
+const addres = function (url) {
+    let regExp = /(https?:\/\/\d?[a-z][a-z0-9]+(?:\.?[0-9a-z]+)*\.[a-z]{2,11})(\/(?:[^#\?\s])+\/?)?(\?[^#]+)?(#\w+)?/g;
 
-// (function () {
-//     alert('hi 3')
-// })();
+    let groups = regExp.exec(url);
+    // console.log([...groups]);
 
-const f3 = () => {
-    alert('hi 4')
+    return [...groups].filter((elem, index) => index !== 0 ? elem : null);
 }
 
-const f4 = x => x * x;
-/**
- * const f4 = x => {
- *   return x * x
- * }
- */
+let arr2 = {
+    elem1: '423',
+    elem2: '53453'
+}
 
-const f5 = (a, b) => a + b;
-/**
- * function f5(a, b){
- *  return a + b;
- * }
- */
+let user = {
+    name: 'Alex',
+    age: 23,
+    gender: 'c',
+    scinColor: 'black',
+    getName: function () { //аксессор
+        console.log(this);
+        return this.name
+    },
+    setName: function (value) { //мьютейтор
+        this.name = value
+    }
+}
