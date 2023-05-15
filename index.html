@@ -7,19 +7,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        pre {
-            margin: 0;
+        .square {
+            width: 200px;
+            height: 200px;
+            background: #ffaeae;
+            margin: 20px auto;
+        }
+
+        .active {
+            background: #f3ffae;
         }
     </style>
 </head>
 
 <body>
-    <div id="root">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, voluptas.</p>
-        <p>Qui ratione optio sint explicabo consequatur magni atque officia eum!</p>
-        <p>Consequuntur illum quod possimus odio saepe nisi nesciunt sapiente quaerat.</p>
+    <div class="parent">
+        <!-- <p>Lorem, ipsum dolor.</p>
+    <p>Ex, minima quisquam?</p>
+    <p>Et, nesciunt similique!</p>
+    <p>Itaque, et odit!</p>
+    <a href="#">Lorem ipsum dolor sit.</a>
+    <h2 class="header">Lorem ipsum dolor sit amet consectetur.</h2> -->
+        <div class="text"></div>
+        <div class="child_1">
+            <h2>Lorem, ipsum dolor.</h2>
+            <p>Lorem ipsum dolor sit amet consectetur.</p>
+            <p>Lorem ipsum dolor sit amet.</p>
+            <a href="">Lorem, ipsum dolor.</a>
+        </div>
+        <h1>Lorem ipsum dolor sit amet consectetur.</h1>
+        <div class="square active"></div>
     </div>
-    <a href="">Lorem, ipsum.</a>
 </body>
 <script src="./script.js"></script>
 

@@ -1,95 +1,71 @@
-function User(name, surname, age) {
-    // this.name = name;
-    // this.surname = surname;
-    this.age = age;
-    // let self = this;
+let items_1 = document.getElementsByTagName('p');
+let items_2 = document.querySelectorAll('p');
 
-    this.getName = function () {
-        return name;
+let style = document.createElement('style');
+style.innerHTML = `
+    .header{
+        font-size: 40px;
+        color: #10f4ae;
     }
-    this.setName = function (n) {
-        let regExp = /[A-Z]/g;
-        if (regExp.test(n)) {
-            name = n;
-        }
-        return this;
-    }
+`;
 
-    const charToCode = (char, index) => {
-        // console.log(self);
-        console.log(this);
-        let charCode = char.charCodeAt();
-        return charCode.toString(index);
-    }
+document.head.append(style);
 
-    this.toString = function (index = 0) {
-        if (!index) return `${name}, ${surname}, ${this.age}`;
-        if (index >= 2 && index <= 36) {
-            console.log(this);
-            let str = `${name}, ${surname}, ${this.age}`;
-            let rez = '';
-            for (let i = 0; i < str.length; i++) {
-                rez += charToCode(str[i], index);
-            }
-            return rez
-        } else {
-            throw new Error('Неверный диапазон чисел, от 2 до 36');
-        }
-    }
-
-
+function color(selector, color) {
+    let elem = document.querySelector(selector);
+    elem.style.color = color;
 }
 
-User.prototype.getAge = function () {
-    return this.age;
+// color('.header', 'red')
+
+function f1() {
+    this.style.fontSize = '36px';
 }
 
-function f() {
-    return () => {
-        console.log(arguments);
+items_2.forEach(elem => elem.onclick = f1);
+
+let textArr = [
+    'Lorem ipsum dolor sit amet consectetur adipisicing.',
+    'Officia, rerum inventore repudiandae dolor aperiam dolores.',
+    'Iusto, mollitia harum. Nostrum beatae cum numquam.',
+    'Consequuntur vitae amet voluptates nobis inventore accusamus!'
+];
+
+let textContainer = document.querySelector('.text');
+
+const createElement = (tag, className, content) => {
+    let elem = document.createElement(tag);
+    let classes = className.split(' ');
+    if (classes.length > 0) {
+        classes.forEach(c => {
+            elem.classList.add(c);
+        });
     }
+    elem.innerText = content;
+    return elem;
 }
 
-let user = new User("Alex", "Alexeev", 25);
+textArr.forEach(text => {
+    let elem = createElement('p', 'class1 class2 class3', text);
+    textContainer.append(elem);
+});
 
+let div = document.querySelector('.child_1');
 
-function Lamp(power) {
-    this.power = power;
-    this.state = false;
+console.log(div.firstElementChild);
+console.log(div.lastElementChild);
+console.log(div.children);
 
-    this.toggle = () => {
-        this.state = !this.state;
-    }
+console.log(div.previousElementSibling);
+console.log(div.nextElementSibling);
 
-    this.getState = () => {
-        if (this.state) {
-            return ' Лампочка горит';
-        } else {
-            return ' Лампочка не горит';
-        }
-    }
+console.log(div.parentNode);
+
+const changeDiv = function () {
+    // let elem = document.querySelector('.square');
+    this.classList.toggle('active');
+    console.log(this.classList.contains('active'));
+    this.removeEventListener('click', changeDiv);
 }
 
-let lamp = new Lamp(100);
-
-let user1 = {
-    name: 'Alex',
-    age: 24,
-}
-
-let student = {
-    cours: 4,
-    group: '435j',
-}
-
-student.__proto__ = user1;
-
-console.log(student);
-
-/**
- * call
- * aply
- * bind
- */
-
-let str = [].map.call('abracadabra', (item) => item.toUpperCase());
+document.querySelector('.square').addEventListener('click', changeDiv);
