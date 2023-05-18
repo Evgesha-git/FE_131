@@ -6,37 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        .square {
-            width: 200px;
-            height: 200px;
-            background: #ffaeae;
-            margin: 20px auto;
-        }
-
-        .active {
-            background: #f3ffae;
-        }
-    </style>
+    <link rel="stylesheet" href="./style/style.css">
 </head>
 
 <body>
-    <div class="parent">
-        <!-- <p>Lorem, ipsum dolor.</p>
-    <p>Ex, minima quisquam?</p>
-    <p>Et, nesciunt similique!</p>
-    <p>Itaque, et odit!</p>
-    <a href="#">Lorem ipsum dolor sit.</a>
-    <h2 class="header">Lorem ipsum dolor sit amet consectetur.</h2> -->
-        <div class="text"></div>
-        <div class="child_1">
-            <h2>Lorem, ipsum dolor.</h2>
-            <p>Lorem ipsum dolor sit amet consectetur.</p>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <a href="">Lorem, ipsum dolor.</a>
+    <div class="container">
+        <form class="todo__enter">
+            <input type="text" class="text">
+            <button type="submit">Add</button>
+        </form>
+        <div class="todo__out">
+            <!-- <div class="todo__item">
+                <div class="todo__text">
+                    <label>
+                        <input type="checkbox">
+                        <span class="input__text">ToDo text</span>
+                    </label>
+                </div>
+                <div class="buttons">
+                    <button class="edit">Edit ToDo</button>
+                    <button class="remove">Remove ToDo</button>
+                </div>
+            </div> -->
         </div>
-        <h1>Lorem ipsum dolor sit amet consectetur.</h1>
-        <div class="square active"></div>
+        <button class="clear">Clear ToDo</button>
     </div>
 </body>
 <script src="./script.js"></script>

@@ -1,71 +1,71 @@
-let items_1 = document.getElementsByTagName('p');
-let items_2 = document.querySelectorAll('p');
+const toDo = function (selector) {
+    let container = document.querySelector(selector);
+    let form = container.querySelector('.todo__enter');
+    let text = form.querySelector('.text');
+    let out = container.querySelector('.todo__out');
+    let reset = container.querySelector('.clear');
 
-let style = document.createElement('style');
-style.innerHTML = `
-    .header{
-        font-size: 40px;
-        color: #10f4ae;
+    const formHandler = event => {
+        event.preventDefault();
+        console.log(text.value);
+        out.append(createToDoItem(text.value));
+        text.value = '';
     }
-`;
 
-document.head.append(style);
+    const createToDoItem = text => {
+        let item = document.createElement('div');
+        item.classList.add('todo__item');
 
-function color(selector, color) {
-    let elem = document.querySelector(selector);
-    elem.style.color = color;
-}
+        let todoText = document.createElement('div');
+        todoText.classList.add('todo__text');
 
-// color('.header', 'red')
+        let label = document.createElement('label');
 
-function f1() {
-    this.style.fontSize = '36px';
-}
+        let checkbox = document.createElement('input');
+        checkbox.setAttribute('type', 'checkbox');
 
-items_2.forEach(elem => elem.onclick = f1);
+        let textItem = document.createElement('span');
+        textItem.classList.add('input__text');
+        textItem.innerText = text;
 
-let textArr = [
-    'Lorem ipsum dolor sit amet consectetur adipisicing.',
-    'Officia, rerum inventore repudiandae dolor aperiam dolores.',
-    'Iusto, mollitia harum. Nostrum beatae cum numquam.',
-    'Consequuntur vitae amet voluptates nobis inventore accusamus!'
-];
+        label.append(checkbox, textItem);
 
-let textContainer = document.querySelector('.text');
+        let buttons = document.createElement('div');
+        buttons.classList.add('buttons');
 
-const createElement = (tag, className, content) => {
-    let elem = document.createElement(tag);
-    let classes = className.split(' ');
-    if (classes.length > 0) {
-        classes.forEach(c => {
-            elem.classList.add(c);
+        let edit = document.createElement('button');
+        edit.classList.add('edit');
+        edit.innerText = 'Edit ToDo';
+
+        let remove = document.createElement('button');
+        remove.classList.add('remove');
+        remove.innerText = 'Remove ToDo';
+
+        buttons.append(edit, remove);
+        todoText.append(label);
+        item.append(todoText, buttons);
+
+        remove.addEventListener('click', () => {
+            item.remove();
         });
+
+        edit.addEventListener('click', () => {
+            textItem.contentEditable = true;
+        });
+
+        textItem.addEventListener('keydown', event => {
+            if (event.altKey && event.key === 'Enter') {
+                textItem.contentEditable = false;
+            }
+        });
+
+        return item;
     }
-    elem.innerText = content;
-    return elem;
+
+    form.addEventListener('submit', formHandler);
+    reset.addEventListener('click', () => {
+        out.innerHTML = '';
+    });
 }
 
-textArr.forEach(text => {
-    let elem = createElement('p', 'class1 class2 class3', text);
-    textContainer.append(elem);
-});
-
-let div = document.querySelector('.child_1');
-
-console.log(div.firstElementChild);
-console.log(div.lastElementChild);
-console.log(div.children);
-
-console.log(div.previousElementSibling);
-console.log(div.nextElementSibling);
-
-console.log(div.parentNode);
-
-const changeDiv = function () {
-    // let elem = document.querySelector('.square');
-    this.classList.toggle('active');
-    console.log(this.classList.contains('active'));
-    this.removeEventListener('click', changeDiv);
-}
-
-document.querySelector('.square').addEventListener('click', changeDiv);
+toDo('.container');
