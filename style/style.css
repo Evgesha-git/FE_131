@@ -4,64 +4,55 @@
 }
 
 .container {
-    max-width: 300px;
-    width: 100%;
-    margin: 10px auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 5px 1px #c7c7c7;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.todo__enter {
-    width: 100%;
-    margin-bottom: 15px;
-    /* .text {
-        width: 100%;
-        display: block;
-        box-sizing: border-box;
-        padding-left: 20px;
-    } */
+ul {
+    list-style: none;
+    display: flex;
 }
 
-.todo__enter .text {
-    width: 100%;
-    display: block;
-    box-sizing: border-box;
-    padding: 5px 0 5px 15px;
-    font-size: 20px;
-    font-style: italic;
-    color: #5a5a5a;
+.tab__buttons li {
+    padding: 10px;
+    background: #e1ff7d;
+    margin: 0 5px;
 }
 
-button[type=submit] {
+.tab__buttons li:hover {
+    cursor: pointer;
+    background: #d6f377;
+    box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, .4);
+}
+
+.tab__buttons li.active {
+    background: #e9fcab;
+}
+
+.tab__content li {
     display: none;
 }
 
-.todo__item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 70px;
-    box-sizing: border-box;
-    border-bottom: 2px solid #3a3a3a;
-    margin-bottom: 5px;
-}
-
-.todo__text {
-    width: 50%;
-}
-
-input[type=checkbox]:checked+.input__text {
-    text-decoration: line-through;
-}
-
-.buttons {
-    max-width: 100px;
-    width: 100%;
-}
-
-.buttons button {
-    width: 100%;
+.tab__content li.active {
     display: block;
-    padding: 5px;
+}
+
+p {
+    font-size: 20px;
+}
+
+.tooltip {
+    position: relative;
+    background: #ddff6e76;
+    cursor: pointer;
+}
+
+.tooltip__content {
+    position: absolute;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.484);
+    width: 100px;
+    left: -40px;
+    padding: 10px;
 }

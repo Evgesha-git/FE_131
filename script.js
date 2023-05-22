@@ -1,71 +1,83 @@
-const toDo = function (selector) {
-    let container = document.querySelector(selector);
-    let form = container.querySelector('.todo__enter');
-    let text = form.querySelector('.text');
-    let out = container.querySelector('.todo__out');
-    let reset = container.querySelector('.clear');
+const tabs = (selector) => {
+    let containers = document.querySelectorAll(selector);
 
-    const formHandler = event => {
-        event.preventDefault();
-        console.log(text.value);
-        out.append(createToDoItem(text.value));
-        text.value = '';
-    }
+    const tabController = (tabContainer) => {
+        let buttons = tabContainer.querySelector('.tab__buttons');
+        // console.log(!buttons);
+        if (!buttons) return;
 
-    const createToDoItem = text => {
-        let item = document.createElement('div');
-        item.classList.add('todo__item');
+        let contents = tabContainer.querySelector('.tab__content');
+        if (!contents) return;
 
-        let todoText = document.createElement('div');
-        todoText.classList.add('todo__text');
+        const contentChange = (index) => {
+            [...contents.children].forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
 
-        let label = document.createElement('label');
-
-        let checkbox = document.createElement('input');
-        checkbox.setAttribute('type', 'checkbox');
-
-        let textItem = document.createElement('span');
-        textItem.classList.add('input__text');
-        textItem.innerText = text;
-
-        label.append(checkbox, textItem);
-
-        let buttons = document.createElement('div');
-        buttons.classList.add('buttons');
-
-        let edit = document.createElement('button');
-        edit.classList.add('edit');
-        edit.innerText = 'Edit ToDo';
-
-        let remove = document.createElement('button');
-        remove.classList.add('remove');
-        remove.innerText = 'Remove ToDo';
-
-        buttons.append(edit, remove);
-        todoText.append(label);
-        item.append(todoText, buttons);
-
-        remove.addEventListener('click', () => {
-            item.remove();
-        });
-
-        edit.addEventListener('click', () => {
-            textItem.contentEditable = true;
-        });
-
-        textItem.addEventListener('keydown', event => {
-            if (event.altKey && event.key === 'Enter') {
-                textItem.contentEditable = false;
+        const buttonsHandler = (event) => {
+            let button = event.target;
+            console.log(event);
+            if (button.tagName === 'LI') {
+                [...buttons.children].forEach((elem, i) => {
+                    if (elem === button) {
+                        elem.classList.add('active');
+                        contentChange(i);
+                    } else {
+                        elem.classList.remove('active');
+                    }
+                });
             }
-        });
+        }
 
-        return item;
+        buttons.addEventListener('click', buttonsHandler);
     }
 
-    form.addEventListener('submit', formHandler);
-    reset.addEventListener('click', () => {
-        out.innerHTML = '';
-    });
+    [...containers].forEach(container => tabController(container));
 }
 
-toDo('.container');
+tabs('.tab');
+
+const tooltip = selector => {
+    const elems = document.querySelectorAll(selector);
+
+    if (!elems || elems.length === 0) return;
+
+    const tooltipHandler = elem => {
+        const createTooltip = event => {
+            let target = event.target;
+            console.log(target);
+            let text = target.dataset.text;
+            if (!text) return;
+
+            let tooltipElem = document.createElement('div');
+            tooltipElem.classList.add('tooltip__content');
+            tooltipElem.innerText = text;
+            tooltipElem.style.top = target.offsetHeight + 10 + 'px';
+
+            target.append(tooltipElem);
+        }
+
+        const deleteTooltip = event => {
+            let target = event.target;
+            let children = target.children;
+
+            [...children].forEach(elem => {
+                if (elem.classList.contains('tooltip__content')) {
+                    elem.remove();
+                }
+            });
+        }
+
+        elem.addEventListener('mouseout', deleteTooltip);
+        elem.addEventListener('mouseover', createTooltip);
+    }
+
+    [...elems].forEach(elem => tooltipHandler(elem));
+}
+
+tooltip('.tooltip');
