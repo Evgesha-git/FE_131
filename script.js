@@ -1,83 +1,49 @@
-const tabs = (selector) => {
-    let containers = document.querySelectorAll(selector);
+const slider = selector => {
+    const sliders = document.querySelectorAll(selector);
 
-    const tabController = (tabContainer) => {
-        let buttons = tabContainer.querySelector('.tab__buttons');
-        // console.log(!buttons);
-        if (!buttons) return;
+    const sliderHandler = sliderContainer => {
+        const slides = sliderContainer.querySelector('.slides');
+        if (!slides) return;
 
-        let contents = tabContainer.querySelector('.tab__content');
-        if (!contents) return;
+        const slide = slides.querySelectorAll('.slide');
+        if (!slide || !slide.length > 1) return;
 
-        const contentChange = (index) => {
-            [...contents.children].forEach((item, i) => {
-                if (i === index) {
-                    item.classList.add('active');
+        const buttons = sliderContainer.querySelectorAll('.button');
+        if (!buttons || buttons.length < 2) return;
+
+        const switchSlide = (event) => {
+            const buf = event.target.classList.contains('next');
+            console.log(buf);
+            // console.log(slides.style.transform);
+            let x = slides.style.transform || '0';
+            // console.log(x);
+            x = x.replace('translate(', '');
+            // console.log(x);
+            x = Math.abs(parseInt(x));
+
+            if (buf) {
+                if (x < (slide.length * 100) - 100) {
+                    x += 100;
                 } else {
-                    item.classList.remove('active');
+                    x = 0;
                 }
-            });
-        }
-
-        const buttonsHandler = (event) => {
-            let button = event.target;
-            console.log(event);
-            if (button.tagName === 'LI') {
-                [...buttons.children].forEach((elem, i) => {
-                    if (elem === button) {
-                        elem.classList.add('active');
-                        contentChange(i);
-                    } else {
-                        elem.classList.remove('active');
-                    }
-                });
+            } else {
+                if (x > 0) {
+                    x -= 100;
+                } else {
+                    x = (slide.length * 100) - 100;
+                }
             }
+
+            slides.style.transform = `translate(-${x}%)`;
         }
 
-        buttons.addEventListener('click', buttonsHandler);
+        [...buttons].forEach(button =>
+            button.addEventListener('click', switchSlide)
+        );
     }
 
-    [...containers].forEach(container => tabController(container));
+    [...sliders].forEach(s => sliderHandler(s));
 }
 
-tabs('.tab');
-
-const tooltip = selector => {
-    const elems = document.querySelectorAll(selector);
-
-    if (!elems || elems.length === 0) return;
-
-    const tooltipHandler = elem => {
-        const createTooltip = event => {
-            let target = event.target;
-            console.log(target);
-            let text = target.dataset.text;
-            if (!text) return;
-
-            let tooltipElem = document.createElement('div');
-            tooltipElem.classList.add('tooltip__content');
-            tooltipElem.innerText = text;
-            tooltipElem.style.top = target.offsetHeight + 10 + 'px';
-
-            target.append(tooltipElem);
-        }
-
-        const deleteTooltip = event => {
-            let target = event.target;
-            let children = target.children;
-
-            [...children].forEach(elem => {
-                if (elem.classList.contains('tooltip__content')) {
-                    elem.remove();
-                }
-            });
-        }
-
-        elem.addEventListener('mouseout', deleteTooltip);
-        elem.addEventListener('mouseover', createTooltip);
-    }
-
-    [...elems].forEach(elem => tooltipHandler(elem));
-}
-
-tooltip('.tooltip');
+slider('.main__slider')
