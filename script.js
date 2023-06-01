@@ -1,81 +1,39 @@
-const popUp = selector => {
-    const elems = document.querySelectorAll(selector);
-    if (!elems) return;
+const accordeon = selector => {
+    let elems = document.querySelectorAll(selector);
 
-    const show = content => {
-        const popupContainer = document.createElement('div');
-        popupContainer.classList.add('popup');
-        const popupModal = document.createElement('div');
-        popupModal.classList.add('popup__modal');
-        const popupClose = document.createElement('div');
-        popupClose.classList.add('popup__close');
-        popupClose.innerHTML = '&#215;';
-        const popupContent = document.createElement('div');
-        popupContent.classList.add('popup__content');
+    const accordeonHandler = (container) => {
+        let li = container.querySelectorAll('li');
+        if (!li) return;
 
-        popupContent.append(content);
-
-        popupContainer.addEventListener('click', e => {
-            let target = e.target;
-
-            if (target.classList.contains('popup') ||
-                target.classList.contains('popup__close')) {
-                popupContainer.remove();
-            }
-        });
-
-        popupContainer.append(popupModal);
-        popupModal.append(popupClose, popupContent);
-
-        document.body.append(popupContainer);
-    }
-
-    const popUpHandler = event => {
-        event.preventDefault();
-        let elem = event.target;
-        let type = elem.dataset.type;
-
-        if (!type) {
-            let parent = elem.closest('[data-type]');
+        const collapse = target => {
+            let parent = target.parentNode;
             if (!parent) return;
-            type = parent.dataset.type;
-            if (!type) return;
-            elem = parent;
+            li.forEach(item => {
+                if (item !== parent) {
+                    let title = item.firstElementChild;
+                    let content = item.lastElementChild;
+                    title.classList.remove('active');
+                    content.classList.remove('active');
+                }
+            });
         }
 
-        // console.log(elem);
-        // console.log(type);
-
-        let content = '';
-
-        if (type === 'img') {
-            const href = elem.href;
-            if (!href) return;
-
-            let img = document.createElement('img');
-            img.setAttribute('src', href);
-            content = img;
+        const clickHandler = event => {
+            let target = event.target;
+            console.log(event);
+            if (target.classList.contains('title')) {
+                target.classList.toggle('active');
+                let content = target.nextElementSibling;
+                // console.log(content);
+                content.classList.toggle('active');
+                collapse(target);
+            }
         }
 
-        if (type === 'text') {
-            let text = elem.dataset.content;
-            content = text;
-        }
-
-        if (type === 'content') {
-            let id = elem.dataset.id;
-            if (!id) return;
-
-            let idChild = document.getElementById(id).children[0];
-            if (!idChild) return;
-
-            content = idChild.cloneNode(true);
-        }
-
-        show(content);
+        container.addEventListener('click', clickHandler);
     }
 
-    elems.forEach(elem => elem.addEventListener('click', popUpHandler));
+    elems.forEach(item => accordeonHandler(item));
 }
 
-popUp('a');
+accordeon('.accordeon');
