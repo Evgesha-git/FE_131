@@ -51,7 +51,71 @@ class NoteController {
         let note = this.notes.find(note => note.data.id === id);
         note.edit(data);
     }
+
+    get stor() {
+        let data = localStorage.getItem('notes');
+        return JSON.parse(data);
+    }
+
+    set stor(data) {
+        let json = JSON.stringify(data);
+        localStorage.setItem('notes', json);
+    }
+
+    get cookie() {
+        let name = 'notes';
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? true : false;
+    }
+
+    set cookie(v) {
+        const options = {
+            path: '/',
+            secure: true,
+            'max-age': v
+        };
+
+        let name = 'notes';
+        let value = '';
+
+        if (options.expires instanceof Date) {
+            options.expires = options.expires.toUTCString();
+        }
+
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+        for (let optionKey in options) {
+            updatedCookie += "; " + optionKey;
+            let optionValue = options[optionKey];
+            if (optionValue !== true) {
+                updatedCookie += "=" + optionValue;
+            }
+        }
+
+        document.cookie = updatedCookie;
+    }
 }
+
+// const Test = function () {
+//     this._name = '';
+//     Object.defineProperty(this, 'name', {
+//         enumerable: true,
+//         configurable: true,
+//         get: function () {
+//             return this._name;
+//         },
+//         set: function (v) {
+//             let reg = /[А-ЯЁа-яё]/g;
+//             if (reg.test(v)) {
+//                 this._name = v;
+//             } else {
+//                 throw new Error('Недопустимый формат имени')
+//             }
+//         }
+//     })
+// }
 
 class NoteUI extends NoteController {
     constructor(selector) {
@@ -83,8 +147,21 @@ class NoteUI extends NoteController {
             title.value = '';
             content.value = '';
 
+            this.stor = this.notes;
+            this.cookie = 10;
             this.render();
         });
+
+        if (!this.cookie) {
+            localStorage.removeItem('notes');
+        }
+
+        if (this.stor) {
+            this.stor.forEach(note => this.add(note.data));
+            this.render();
+        }
+
+        // console.log(this.cookie);
 
         this.root.append(this.inputContainer, this.noteContainer);
     }
@@ -108,6 +185,7 @@ class NoteUI extends NoteController {
 
             remove.addEventListener('click', () => {
                 this.remove(note.data.id);
+                this.stor = this.notes;
                 this.render();
             });
 
@@ -121,7 +199,8 @@ class NoteUI extends NoteController {
                     };
                     this.edit(note.data.id, data);
                     edit.innerText = 'Edit';
-                    flag = !flag
+                    flag = !flag;
+                    this.stor = this.notes;
                 } else {
                     title.contentEditable = true;
                     content.contentEditable = true;
