@@ -96,36 +96,43 @@ class NoteController {
 
         document.cookie = updatedCookie;
     }
-}
 
-// const Test = function () {
-//     this._name = '';
-//     Object.defineProperty(this, 'name', {
-//         enumerable: true,
-//         configurable: true,
-//         get: function () {
-//             return this._name;
-//         },
-//         set: function (v) {
-//             let reg = /[А-ЯЁа-яё]/g;
-//             if (reg.test(v)) {
-//                 this._name = v;
-//             } else {
-//                 throw new Error('Недопустимый формат имени')
-//             }
-//         }
-//     })
-// }
+    async getApiData() {
+        let response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        let data = await response.json();
+        return data;
+    }
+}
 
 class NoteUI extends NoteController {
     constructor(selector) {
         super();
         this.root = document.querySelector(selector);
         this.noteContainer = document.createElement('div');
-        this.init();
+
+        this.preloader = document.createElement('div');
+        this.preloader.classList.add('preloader');
+        this.preloader.innerHTML = `
+        <div class="preloader__row">
+            <div class="preloader__item"></div>
+            <div class="preloader__item"></div>
+        </div>
+        `;
+
+        this.root.append(this.preloader);
+
+        new Promise((resolve, reject) => {
+            setTimeout(() => resolve(), 3000)
+        })
+            .finally(() => {
+                this.preloader.remove();
+                this.init();
+            })
+
+        // this.init();
     }
 
-    init() {
+    async init() {
         this.inputContainer = document.createElement('form');
         let title = document.createElement('input');
         title.setAttribute('type', 'text');
@@ -140,7 +147,7 @@ class NoteUI extends NoteController {
 
             let data = {
                 title: title.value,
-                content: content.value,
+                body: content.value,
             }
 
             this.add(data);
@@ -151,6 +158,18 @@ class NoteUI extends NoteController {
             this.cookie = 10;
             this.render();
         });
+
+        if (!this.stor) {
+            // Отрисовать прелоадер
+            this.root.append(this.preloader);
+            let data = await this.getApiData();
+            this.preloader.remove();
+            // Удалить прилоадер
+            // this.stor = data;
+            data.forEach(note => this.add(note));
+            this.stor = this.notes;
+            this.render();
+        }
 
         if (!this.cookie) {
             localStorage.removeItem('notes');
@@ -174,7 +193,7 @@ class NoteUI extends NoteController {
             let title = document.createElement('h2');
             title.innerHTML = note.data.title;
             let content = document.createElement('p');
-            content.innerHTML = note.data.content;
+            content.innerHTML = note.data.body;
             let buttons = document.createElement('div');
             let edit = document.createElement('button');
             edit.innerText = 'Edit';
@@ -195,7 +214,7 @@ class NoteUI extends NoteController {
                     content.contentEditable = false;
                     let data = {
                         title: title.innerText,
-                        content: content.innerText
+                        body: content.innerText
                     };
                     this.edit(note.data.id, data);
                     edit.innerText = 'Edit';
@@ -215,3 +234,80 @@ class NoteUI extends NoteController {
 }
 
 new NoteUI('.root');
+
+// let promise = new Promise((resolve, reject) => {
+//     setTimeout(() => resolve('Промис выполнен'), 3000);
+//     setTimeout(() => reject('Промис не выполнен'), 3500);
+// });
+
+// let preloader = document.createElement('div');
+// preloader.classList.add('preloader');
+// preloader.innerHTML = `
+// <div class="preloader__row">
+//     <div class="preloader__item"></div>
+//     <div class="preloader__item"></div>
+// </div>
+// `;
+
+// document.body.append(preloader);
+
+// promise
+//     .then(
+//         rez => console.log(rez),
+//         // err => console.log(err)
+//     )
+//     .catch(
+//         err => console.log(err)
+//     )
+//     .finally(() => {
+//         preloader.remove();
+//     });
+
+// Promise.resolve(promise)
+//     .then(rez => console.log(rez))
+
+// const myFetch = ms => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(
+//             () => {
+//                 resolve(`Промис выполнен через ${ms}ms`)
+//             },
+//             ms);
+//     });
+// }
+
+// let p1 = myFetch(2300);
+// let p2 = myFetch(5600);
+// let p3 = myFetch(1200);
+// // let p4 = Promise.reject(3);
+
+// Promise.race([p1, p2, p3]) //[p1, p2, p3, p4]
+//     .then(rez => {
+//         console.log(rez);
+//     });
+
+// Promise.all([p1, p2, p3]) //[p1, p2, p3, p4]
+//     .then(rez => {
+//         rez.forEach(data => console.log(data));
+//     });
+
+new Promise((resolve, reject) => {
+    setTimeout(() => resolve(1), 1000)
+})
+    .then(rez => {
+        console.log(rez);
+        // return rez * 2;
+        return new Promise((resolve, reject) => {
+            setTimeout(() => resolve(rez * 2), 1000);
+        })
+    })
+    .then(rez => {
+        console.log(rez);
+        // return rez * 2;
+        return new Promise((resolve, reject) => {
+            setTimeout(() => resolve(rez * 2), 1000);
+        })
+    })
+    .then(rez => {
+        console.log(rez);
+    })
