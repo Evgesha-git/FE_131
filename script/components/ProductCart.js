@@ -1,4 +1,5 @@
 // @ts-check
+import { addToCart, getItemState, removeItem } from "../pages/Cart.js";
 
 class ProductCart {
     constructor(data) {
@@ -16,6 +17,7 @@ class ProductCart {
         let image = document.createElement('div');
         let linkImg = document.createElement('a');
         let price = document.createElement('span');
+        let button = document.createElement('button');
         title.append(link);
         desc.innerText = this.data.description;
         link.setAttribute('href', `#Product_${this.data.id}`);
@@ -26,7 +28,19 @@ class ProductCart {
         linkImg.setAttribute('href', `#Product_${this.data.id}`);
         linkImg.append(img);
         image.append(linkImg);
-        this.item.append(image, title, desc, price);
+        button.innerText = `${!getItemState(this.data.id) ?
+            'Add to cart' :
+            'Remove'}`;
+        button.addEventListener('click', () => {
+            if (getItemState(this.data.id)) {
+                removeItem(this.data.id);
+                button.innerText = 'Add to cart';
+            } else {
+                addToCart(this.data);
+                button.innerText = 'Remove';
+            }
+        });
+        this.item.append(image, title, desc, price, button);
     }
 
     init() {

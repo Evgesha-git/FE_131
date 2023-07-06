@@ -10,10 +10,16 @@ class Main {
         if (!hash) hash = 'Home';
         console.log(hash);
 
-        const component = await import(`../pages/${hash}.js`);
-        console.log(component);
-        let item = new component.default().init();
-        this.elem.append(item);
+        if (hash !== 'Cart') {
+            const component = await import(`../pages/${hash}.js`);
+            console.log(component);
+            let item = new component.default().init();
+            this.elem.append(item);
+        } else {
+            const component = await import(`../pages/${hash}.js`);
+            console.log(component);
+            this.elem.append(component.default.init());
+        }
     }
 
     router() {
