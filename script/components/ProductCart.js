@@ -38,21 +38,24 @@ class ProductCart {
     buttonBlock(){
         let buttons = document.createElement('div');
         buttons.classList.add('buttons');
+        
 
         let countBlock = document.createElement('div');
         let buttonMas = document.createElement('button');
         let buttonMin = document.createElement('button');
         let counter = document.createElement('div');
-        /** @type {number} */
-        let count = 0;
+        countBlock.classList.add('hide');
+        counter.innerHTML = '1';
+
+        buttonMas.innerHTML = '+';
+        buttonMin.innerHTML = '-';
 
         buttonMas.addEventListener('click', () => {
-            count = addCount(this.data.id, true);
+            counter.innerHTML = addCount(this.data.id, true);
         });
         buttonMin.addEventListener('click', () => {
-            count = addCount(this.data.id, false);
+            counter.innerHTML = addCount(this.data.id, false);
         });
-        counter.innerHTML = count.toString();
         countBlock.append(buttonMas, counter, buttonMin);
 
 

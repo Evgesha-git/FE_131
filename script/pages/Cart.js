@@ -65,6 +65,7 @@ class Cart {
                 }
             })
         }
+        this.widget()
         return this.cart.find(item => item.id === id).count; //Возвращаем количество товаров
     }
 
