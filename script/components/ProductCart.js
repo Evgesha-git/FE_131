@@ -1,8 +1,12 @@
 // @ts-check
-import { addToCart, getItemState, removeItem } from "../pages/Cart.js";
+import { addToCart, getItemState, removeItem, addCount } from "../pages/Cart.js";
 
 class ProductCart {
-    constructor(data) {
+    /**
+     * @param {any} data 
+     * @param {boolean} [mode] 
+     */
+    constructor(data, mode) {
         this.data = data;
         /**@type {HTMLDivElement} */
         this.item = document.createElement('div');
@@ -17,7 +21,7 @@ class ProductCart {
         let image = document.createElement('div');
         let linkImg = document.createElement('a');
         let price = document.createElement('span');
-        let button = document.createElement('button');
+        let button = this.buttonBlock();
         title.append(link);
         desc.innerText = this.data.description;
         link.setAttribute('href', `#Product_${this.data.id}`);
@@ -28,19 +32,49 @@ class ProductCart {
         linkImg.setAttribute('href', `#Product_${this.data.id}`);
         linkImg.append(img);
         image.append(linkImg);
+        this.item.append(image, title, desc, price, button);
+    }
+
+    buttonBlock(){
+        let buttons = document.createElement('div');
+        buttons.classList.add('buttons');
+
+        let countBlock = document.createElement('div');
+        let buttonMas = document.createElement('button');
+        let buttonMin = document.createElement('button');
+        let counter = document.createElement('div');
+        /** @type {number} */
+        let count = 0;
+
+        buttonMas.addEventListener('click', () => {
+            count = addCount(this.data.id, true);
+        });
+        buttonMin.addEventListener('click', () => {
+            count = addCount(this.data.id, false);
+        });
+        counter.innerHTML = count.toString();
+        countBlock.append(buttonMas, counter, buttonMin);
+
+
+        let button = document.createElement('button');
         button.innerText = `${!getItemState(this.data.id) ?
             'Add to cart' :
             'Remove'}`;
         button.addEventListener('click', () => {
             if (getItemState(this.data.id)) {
                 removeItem(this.data.id);
+                countBlock.classList.add('hide');
                 button.innerText = 'Add to cart';
             } else {
                 addToCart(this.data);
+                countBlock.classList.remove('hide');
                 button.innerText = 'Remove';
             }
         });
-        this.item.append(image, title, desc, price, button);
+
+        buttons.append(countBlock, button);
+
+        return buttons;
     }
 
     init() {

@@ -8,4 +8,12 @@ const getData = async () => {
     }
 }
 
-export { getData };
+const getIdData = async (id) => {
+    const resp = await fetch(`https://fakestoreapi.com/products/${id}`);
+    if (resp.ok) {
+        let data = await resp.json();
+        return data;
+    }
+}
+
+export { getData, getIdData };

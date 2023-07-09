@@ -7,13 +7,23 @@ class Main {
     async routeHandler() {
         this.elem.innerHTML = '';
         let hash = window.location.hash.slice(1);
+        let idIndex = hash.indexOf('_');
+        let id = null;
+        if (idIndex !== -1){
+            id = hash.slice(idIndex + 1);
+            hash = hash.slice(0, idIndex);
+        }
         if (!hash) hash = 'Home';
-        console.log(hash);
 
         if (hash !== 'Cart') {
             const component = await import(`../pages/${hash}.js`);
-            console.log(component);
-            let item = new component.default().init();
+            
+            let item = null;
+            if (id){
+                item = new component.default(id).init();
+            }else{
+                item = new component.default().init();
+            }
             this.elem.append(item);
         } else {
             const component = await import(`../pages/${hash}.js`);

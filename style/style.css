@@ -14,4 +14,8 @@ body {
 }
 #root .header {
   width: 100%;
+}
+
+.hide {
+  display: none;
 }/*# sourceMappingURL=style.css.map */

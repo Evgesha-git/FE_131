@@ -11,6 +11,7 @@ class Cart {
         this.widget = this.widget.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.getItemState = this.getItemState.bind(this);
+        this.addCount = this.addCount.bind(this);
     }
 
     render() {
@@ -33,15 +34,47 @@ class Cart {
         this.widgetItem.setAttribute('href', '#Cart');
         this.widgetItem.innerHTML = `
             <span>${counter.toString()}</span> | 
-            <span>${this.cart.reduce((count, item) => count + item.price, 0)}</span>
+            <span>${this.cart.reduce((count, item) => count + (item.price * item.count), 0)}</span>
         `;
         // this.widgetItem.append(widgetText);
         return this.widgetItem;
     }
 
+    /**
+     * @param {number} id
+     * @param {boolean} mode
+     * */
+    addCount(id, mode){
+        if (mode){
+            this.cart = this.cart.map(item => {
+                if (item.id === id){
+                    item.count += 1;
+                    return item;
+                }else{
+                    return item;
+                }
+            })
+        }else{
+            this.cart = this.cart.map(item => {
+                if (item.id === id){
+                    if (item.count < 1) return item;
+                    item.count -= 1;
+                    return item;
+                }else{
+                    return item;
+                }
+            })
+        }
+        return this.cart.find(item => item.id === id).count; //Возвращаем количество товаров
+    }
+
     addToCart(item) {
         if (!item) return;
         if (!this.cart.includes(item)) {
+            item = {
+                ...item,
+                count: 1,
+            }
             this.cart.push(item);
         }
         this.widget();
@@ -70,6 +103,7 @@ const addToCart = cart.addToCart;
 const widget = cart.widget();
 const removeItem = cart.removeItem;
 const getItemState = cart.getItemState;
+const addCount = cart.addCount;
 
 export default cart;
-export { addToCart, widget, removeItem, getItemState };
+export { addToCart, widget, removeItem, getItemState, addCount };
