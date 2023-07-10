@@ -25,6 +25,7 @@ class ProductCart {
         title.append(link);
         desc.innerText = this.data.description;
         link.setAttribute('href', `#Product_${this.data.id}`);
+        // link.setAttribute('target', '_blank');
         link.innerText = this.data.title;
         price.innerText = this.data.price;
         img.setAttribute('src', this.data.image);
@@ -35,16 +36,18 @@ class ProductCart {
         this.item.append(image, title, desc, price, button);
     }
 
-    buttonBlock(){
+    buttonBlock() {
         let buttons = document.createElement('div');
         buttons.classList.add('buttons');
-        
+
 
         let countBlock = document.createElement('div');
         let buttonMas = document.createElement('button');
         let buttonMin = document.createElement('button');
         let counter = document.createElement('div');
-        countBlock.classList.add('hide');
+        if (!getItemState(this.data.id)) {
+            countBlock.classList.add('hide');
+        }
         counter.innerHTML = '1';
 
         buttonMas.innerHTML = '+';
