@@ -1,0 +1,13 @@
+.product__item {
+    max-width: 400px;
+}
+
+.product__item img {
+    width: 100%;
+    display: block;
+}
+
+.product__item h2 {
+    font-weight: 700;
+    font-size: 26px;
+}

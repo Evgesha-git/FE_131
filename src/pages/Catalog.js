@@ -1,7 +1,8 @@
 // @ts-check
-import { getData } from "../utils/getApiData.js";
-import ProductCart from "../components/ProductCart.js";
-import { pagination } from "../utils/pagination.js";
+import { getData } from "../utils/getApiData";
+import ProductCart from "../components/ProductCart";
+import { pagination } from "../utils/pagination";
+import './catalog.css';
 
 export default class Catalog {
     constructor() {

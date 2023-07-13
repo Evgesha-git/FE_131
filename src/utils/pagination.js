@@ -14,6 +14,8 @@ const pagination = (data, countPerPage = 4, page = 1) => {
     let firstContentIndex = lastContentIndex - countPerPage;
     let pageData = [];
 
+    console.log('test webpack');
+
     const changePage = (direction) => {
         if (direction) {
             if (page === pageCount) {

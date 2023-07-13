@@ -1,5 +1,6 @@
 // @ts-check
-import { addToCart, getItemState, removeItem, addCount } from "../pages/Cart.js";
+import { addToCart, getItemState, removeItem, addCount } from "../pages/Cart";
+import './productCart.css';
 
 class ProductCart {
     /**
@@ -66,6 +67,10 @@ class ProductCart {
         button.innerText = `${!getItemState(this.data.id) ?
             'Add to cart' :
             'Remove'}`;
+
+        if (getItemState(this.data.id)) {
+            button.classList.add('remove');
+        }
         button.addEventListener('click', () => {
             if (getItemState(this.data.id)) {
                 removeItem(this.data.id);

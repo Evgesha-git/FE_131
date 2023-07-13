@@ -1,20 +1,20 @@
 // @ts-check
-import { getIdData } from "../utils/getApiData.js";
-import ProductCart from "../components/ProductCart.js";
+import { getIdData } from "../utils/getApiData";
+import ProductCart from "../components/ProductCart";
 
-class Product{
-    constructor(id){
+class Product {
+    constructor(id) {
         this.id = id;
         this.item = document.createElement('div');
     }
 
-    async render(){
+    async render() {
         const data = await getIdData(this.id);
         let productItem = new ProductCart(data, true).init();
         this.item.append(productItem);
     }
 
-    init(){
+    init() {
         this.render();
         return this.item;
     }

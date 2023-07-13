@@ -1,4 +1,5 @@
-import { widget } from "../pages/Cart.js";
+import { widget } from "../pages/Cart";
+import logo from '../../images/logo.svg';
 
 class Header {
     constructor() {
@@ -9,7 +10,7 @@ class Header {
         this.elem.classList.add('header');
         this.elem.innerHTML = `
             <div class="logo">
-                <a href="#"><img src="https://via.placeholder.com/50" alt="logo" /></a>
+                <a href="#"><img src='${logo}' alt="logo" /></a>
             </div>
             <nav class="nav">
                 <ul>

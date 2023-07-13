@@ -1,5 +1,5 @@
 // @ts-check
-import ProductCart from "../components/ProductCart.js";
+import ProductCart from "../components/ProductCart";
 
 class Cart {
     constructor() {
@@ -44,23 +44,23 @@ class Cart {
      * @param {number} id
      * @param {boolean} mode
      * */
-    addCount(id, mode){
-        if (mode){
+    addCount(id, mode) {
+        if (mode) {
             this.cart = this.cart.map(item => {
-                if (item.id === id){
+                if (item.id === id) {
                     item.count += 1;
                     return item;
-                }else{
+                } else {
                     return item;
                 }
             })
-        }else{
+        } else {
             this.cart = this.cart.map(item => {
-                if (item.id === id){
+                if (item.id === id) {
                     if (item.count < 1) return item;
                     item.count -= 1;
                     return item;
-                }else{
+                } else {
                     return item;
                 }
             })

@@ -9,19 +9,19 @@ class Main {
         let hash = window.location.hash.slice(1);
         let idIndex = hash.indexOf('_');
         let id = null;
-        if (idIndex !== -1){
+        if (idIndex !== -1) {
             id = hash.slice(idIndex + 1);
             hash = hash.slice(0, idIndex);
         }
         if (!hash) hash = 'Home';
 
         if (hash !== 'Cart') {
-            const component = await import(`../pages/${hash}.js`);
-            
+            const component = await import(`../pages/${hash}`);
+
             let item = null;
-            if (id){
+            if (id) {
                 item = new component.default(id).init();
-            }else{
+            } else {
                 item = new component.default().init();
             }
             this.elem.append(item);
