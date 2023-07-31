@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
+import Widget from "./Widget";
 
 const Nav = () => {
     return (
@@ -17,6 +18,8 @@ const Nav = () => {
                         </li>
                     </ul>
                 </nav>
+
+                <Widget />
             </header>
             <Outlet />
         </>
