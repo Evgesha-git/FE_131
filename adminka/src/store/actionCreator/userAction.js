@@ -24,6 +24,36 @@ export const logInGoogle = () => {
     }
 }
 
+export const loginWithEmail = (email, password) => {
+    return async (dispatch) => {
+        dispatch({ type: userActionType.FETCH_USER });
+        try {
+            const { user } = signInWithEmailAndPassword(auth, email, password);
+            dispatch({ type: userActionType.USER_SUCCESS, payload: user });
+        } catch (error) {
+            dispatch({ type: userActionType.USER_ERROR, payload: error.message });
+        }
+    }
+}
+
+export const registrUser = (email, password) => {
+    return async (dispatch) => {
+        dispatch({ type: userActionType.FETCH_USER });
+        try {
+            const { user } = createUserWithEmailAndPassword(auth, email, password);
+            dispatch({
+                type: userActionType.USER_SUCCESS,
+                payload: user
+            });
+        } catch (error) {
+            dispatch({
+                type: userActionType.USER_ERROR,
+                payload: error.message
+            });
+        }
+    }
+}
+
 export const logOut = () => {
     return async (dispath) => {
         dispath({ type: userActionType.FETCH_USER });
