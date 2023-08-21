@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useAction } from "../../hooks/useAction";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const AdminPage = () => {
     const { data, loading, error, message } = useSelector(
         (state) => state.data
     );
-    const { setData, logOut, editData } = useAction();
+    const { setData, logOut, editData, getData, removeItemData } = useAction();
     const navigate = useNavigate();
 
     console.log(data);
@@ -24,17 +24,28 @@ const AdminPage = () => {
             minDesc,
             desc,
         };
-        if (data?.products.length ?? false) {
+        if (data?.products?.length ?? false) {
             editData("test", product);
         } else {
             setData("test", product);
         }
+        // getData("test");
     };
 
     const exit = () => {
         logOut();
         navigate("/");
     };
+
+    const remove = (id) => {
+        const newData = data?.products.filter((item) => item.id !== id);
+        removeItemData("test", newData);
+        // getData("test");
+    };
+
+    useEffect(() => {
+        getData("test");
+    }, [message]);
 
     return (
         <div className="container">
@@ -55,6 +66,18 @@ const AdminPage = () => {
                 ></textarea>
                 <button type="submit">Добавить</button>
             </form>
+            <div className="container">
+                <p className="counter">
+                    {data?.products?.length} - записей в БД
+                </p>
+                {data?.products?.map((item, i) => (
+                    <div className="item" key={i.toString()}>
+                        <h3 className="title">{item.title}</h3>
+                        <p className="desc">{item.minDesc}</p>
+                        <button onClick={() => remove(item.id)}>Удалить</button>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

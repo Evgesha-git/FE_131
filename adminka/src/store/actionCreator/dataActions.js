@@ -71,3 +71,28 @@ export const editData = (id, data) => {
         }
     }
 }
+
+export const removeItemData = (id, data) => {
+    return async (dispatch) => {
+        dispatch({ type: dataActionType.FETCH_DATA });
+        try {
+            const resp = await get(child(ref(db), `catalog/${id}`));
+            if (resp.exists()) {
+                const oldData = resp.val();
+                oldData.products = data;
+                await update(ref(db, `catalog/${id}`), oldData);
+                dispatch({
+                    type: dataActionType.DATA_EDIT,
+                    payload: 'Данные обнавлены'
+                });
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            dispatch({
+                type: dataActionType.DATA_ERROR,
+                payload: 'Не удалось обновить записи'
+            });
+        }
+    }
+}
